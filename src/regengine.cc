@@ -48,7 +48,7 @@ bool PatternList::exec(const std::string& str, size_t offset, struct match& m) c
 }
 
 void PatternList::add_pattern(std::unique_ptr<Regengine> pattern) {
-	patterns.push_back(move(pattern));
+	patterns.push_back(std::move(pattern));
 }
 
 // Shamelessly stolen from ripgrep!
