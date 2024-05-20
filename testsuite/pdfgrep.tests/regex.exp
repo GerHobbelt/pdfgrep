@@ -35,18 +35,15 @@ set empty [mkpdf empty {
     abc
 }]
 
-# Note: For some reason, newer versions of poppler generate spurious whitespace
-# after the "abc" here, so we need to account for that in the tests.
-
 set timeout 2
 pdfgrep_expect "" $empty \
-"abc\\s*"
+"abc"
 
 set test "Empty pattern -- fixed string"
 
 set timeout 2
 pdfgrep_expect -F "" $empty \
-"abc\\s*"
+"abc"
 
 set test "Empty pattern -- PCRE"
 
@@ -54,7 +51,7 @@ set requires_pcre_support true
 
 set timeout 2
 pdfgrep_expect -P "" $empty \
-"abc\\s*"
+"abc"
 
 ######################################################################
 
@@ -290,13 +287,7 @@ pdfgrep_expect -P "^line" $pdf "line1"
 
 set test "\$ only matches the end of a page"
 
-# FIXME This currently fails, but shouldn't. The problem is that the last line
-# ends with a newline chraracter and so "line.\n$" would match, but "line.$"
-# doesn't.
-#
-# See bug #14 for details.
-
-pdfgrep_expect_x "line.\$" $pdf "line2"
+pdfgrep_expect "line.\$" $pdf "line2"
 
 ######################################################################
 
